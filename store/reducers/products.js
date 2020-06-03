@@ -1,12 +1,14 @@
 import { PRODUCTS } from '../../data/products-data'
 
 const initialState = {
-  products: PRODUCTS,
-  cart: []
+  products: PRODUCTS
 }
 
 const productsReducer = (state = initialState, action) => {
-  return state
+  switch (action.type) {
+    default:
+      return state
+  }
 }
 
 export default productsReducer

@@ -1,14 +1,16 @@
 import React from 'react'
 import { View, StyleSheet, FlatList } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import ProductThumbnail from '../components/ProductThumbnail'
 import { Ionicons } from '@expo/vector-icons'
-
+import * as cartActions from '../store/actions/cart'
 import colors from '../constants/colors'
 
 const ProductsScreen = props => {
   const products = useSelector(state => state.products.products)
+  const dispatch = useDispatch()
+
   const renderThumbnail = itemData => {
     return (
       <ProductThumbnail
@@ -23,6 +25,9 @@ const ProductsScreen = props => {
               productName: itemData.item.productName
             }
           })
+        }}
+        onAddToCart={() => {
+          dispatch(cartActions.addToCart(itemData.item))
         }}
       />
     )

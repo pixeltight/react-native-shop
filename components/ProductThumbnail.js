@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image, Button } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 
 import CustomButton from '../components/CustomButton'
 import colors from '../constants/colors'
@@ -8,7 +8,9 @@ const ProductThumbnail = props => {
   return (
     <View style={styles.thumbnailContainer}>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: props.image }} style={styles.image} />
+        <TouchableOpacity onPress={props.onViewDetails}>
+          <Image source={{ uri: props.image }} style={styles.image} />
+        </TouchableOpacity>
       </View>
       <View style={styles.details}>
         <Text style={styles.title}>{props.title}</Text>
@@ -18,7 +20,9 @@ const ProductThumbnail = props => {
         <CustomButton onButtonPress={props.onViewDetails}>
           View Details
         </CustomButton>
-        <CustomButton>Add to Cart</CustomButton>
+        <CustomButton onButtonPress={props.onAddToCart}>
+          Add to Cart
+        </CustomButton>
       </View>
     </View>
   )
