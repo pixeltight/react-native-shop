@@ -1,29 +1,36 @@
 import React from 'react'
 import { View, StyleSheet, FlatList } from 'react-native'
+import { useSelector } from 'react-redux'
 
-import { PRODUCTS } from '../data/products-data'
 import ProductThumbnail from '../components/ProductThumbnail'
 import { Ionicons } from '@expo/vector-icons'
 
 import colors from '../constants/colors'
 
 const ProductsScreen = props => {
-  const renderThumbnail = itemData => (
-    <ProductThumbnail
-      title={itemData.item.productName}
-      image={itemData.item.imageUrl}
-      price={itemData.item.price}
-      onViewDetails={() => {
-        props.navigation.navigate({
-          routeName: 'ProductDetails'
-        })
-      }}
-    />
-  )
+  const products = useSelector(state => state.products.products)
+  const renderThumbnail = itemData => {
+    return (
+      <ProductThumbnail
+        title={itemData.item.productName}
+        image={itemData.item.imageUrl}
+        price={itemData.item.price}
+        onViewDetails={() => {
+          props.navigation.navigate({
+            routeName: 'ProductDetails',
+            params: {
+              productId: itemData.item.productId,
+              productName: itemData.item.productName
+            }
+          })
+        }}
+      />
+    )
+  }
   return (
     <View style={{ backgroundColor: colors.medGray }}>
       <FlatList
-        data={PRODUCTS}
+        data={products}
         renderItem={renderThumbnail}
         keyExtractor={(item, index) => item.productId}
         style={{ width: '100%', paddingHorizontal: 8 }}

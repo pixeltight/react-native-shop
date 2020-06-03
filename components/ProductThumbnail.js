@@ -55,7 +55,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    color: '#888'
+    color: colors.darkGray,
+    fontFamily: 'roboto-bold'
+  },
+  price: {
+    fontSize: 14,
+    color: colors.textGray,
+    fontFamily: 'roboto-regular'
   },
   actions: {
     flexDirection: 'row',
