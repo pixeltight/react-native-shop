@@ -5,15 +5,17 @@ import * as Font from 'expo-font'
 import { AppLoading } from 'expo'
 import { enableScreens } from 'react-native-screens'
 
-import ProductsNavigator from './navigation/ProductsNavigator'
+import ShopNavigator from './navigation/ShopNavigator'
 import productsReducer from './store/reducers/products'
 import cartReducer from './store/reducers/cart'
+import ordersReducer from './store/reducers/orders'
 
 enableScreens()
 
 const rootReducer = combineReducers({
   products: productsReducer,
-  cart: cartReducer
+  cart: cartReducer,
+  orders: ordersReducer
 })
 
 const store = createStore(
@@ -41,7 +43,7 @@ export default function App () {
 
   return (
     <Provider store={store}>
-      <ProductsNavigator />
+      <ShopNavigator />
     </Provider>
   )
 }

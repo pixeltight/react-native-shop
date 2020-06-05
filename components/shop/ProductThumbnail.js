@@ -1,38 +1,29 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 
-import CustomButton from '../components/CustomButton'
-import colors from '../constants/colors'
+import colors from '../../constants/colors'
 
 const ProductThumbnail = props => {
   return (
     <View style={styles.thumbnailContainer}>
       <View style={styles.imageContainer}>
-        <TouchableOpacity onPress={props.onViewDetails}>
+        <TouchableOpacity onPress={props.onSelect} activeOpacity={0.5}>
           <Image source={{ uri: props.image }} style={styles.image} />
         </TouchableOpacity>
       </View>
       <View style={styles.details}>
         <Text style={styles.title}>{props.title}</Text>
-        <Text style={styles.price}>${props.price.toFixed(2)}</Text>
+        {/* <Text style={styles.price}>${props.price.toFixed(2)}</Text> */}
       </View>
-      <View style={styles.actions}>
-        <CustomButton onButtonPress={props.onViewDetails}>
-          View Details
-        </CustomButton>
-        <CustomButton onButtonPress={props.onAddToCart}>
-          Add to Cart
-        </CustomButton>
-      </View>
+      <View style={styles.actions}>{props.children}</View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   thumbnailContainer: {
-    height: 200,
     width: '100%',
-    backgroundColor: '#efefef',
+    backgroundColor: '#f8f8f8',
     marginBottom: 20,
     borderRadius: 10,
     height: 250,

@@ -2,9 +2,9 @@ import React from 'react'
 import { Text, StyleSheet, ScrollView, Image } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 
-import CustomButton from '../components/CustomButton'
-import colors from '../constants/colors'
-import * as cartActions from '../store/actions/cart'
+import CustomButton from '../../components/UI/CustomButton'
+import colors from '../../constants/colors'
+import * as cartActions from '../../store/actions/cart'
 
 const ProductDetailsScreen = props => {
   const productId = props.navigation.getParam('productId')
