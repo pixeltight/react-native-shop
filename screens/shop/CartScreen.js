@@ -30,7 +30,9 @@ const CartScreen = props => {
       <View style={styles.summary}>
         <Text style={styles.summaryText}>
           Total:{' '}
-          <Text style={styles.amount}>${cartTotalAmount.toFixed(2)}</Text>
+          <Text style={styles.amount}>
+            ${Math.round(cartTotalAmount.toFixed(2) * 100) / 100}
+          </Text>
         </Text>
         <Button
           title='Order Now'
@@ -73,13 +75,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 20,
-    padding: 10,
-    shadowColor: 'black',
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    borderRadius: 8,
-    backgroundColor: 'white'
+    padding: 10
   },
   summaryText: {
     fontFamily: 'roboto-regular',

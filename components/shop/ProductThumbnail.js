@@ -2,10 +2,11 @@ import React from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 
 import colors from '../../constants/colors'
+import Card from '../UI/Card'
 
 const ProductThumbnail = props => {
   return (
-    <View style={styles.thumbnailContainer}>
+    <Card style={styles.thumbnailContainer}>
       <View style={styles.imageContainer}>
         <TouchableOpacity onPress={props.onSelect} activeOpacity={0.5}>
           <Image source={{ uri: props.image }} style={styles.image} />
@@ -13,24 +14,19 @@ const ProductThumbnail = props => {
       </View>
       <View style={styles.details}>
         <Text style={styles.title}>{props.title}</Text>
-        {/* <Text style={styles.price}>${props.price.toFixed(2)}</Text> */}
+        <Text style={styles.price}>${props.price.toFixed(2)}</Text>
       </View>
       <View style={styles.actions}>{props.children}</View>
-    </View>
+    </Card>
   )
 }
 
 const styles = StyleSheet.create({
   thumbnailContainer: {
     width: '100%',
-    backgroundColor: '#f8f8f8',
     marginBottom: 20,
     borderRadius: 10,
-    height: 250,
-    shadowColor: '#000',
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8
+    height: 250
   },
   imageContainer: {
     width: '100%',

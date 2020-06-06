@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, Text, Button } from 'react-native'
+import { FlatList, Button, Alert } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { deleteProduct } from '../../store/actions/products'
@@ -13,6 +13,23 @@ const UserProductsScreen = props => {
   const dispatch = useDispatch()
   const userProducts = useSelector(state => state.products.userProducts)
 
+  const editProductHandler = id => {
+    props.navigation.navigate('EditProduct', { productId: id })
+  }
+
+  const deleteHandler = id => {
+    Alert.alert('Are you sure you want to delete this item?', '', [
+      { text: 'No', style: 'default' },
+      {
+        text: 'Yes',
+        style: 'destructive',
+        onPress: () => {
+          dispatch(deleteProduct(id))
+        }
+      }
+    ])
+  }
+
   return (
     <FlatList
       data={userProducts}
@@ -23,16 +40,20 @@ const UserProductsScreen = props => {
           image={itemData.item.imageUrl}
           title={itemData.item.productName}
           price={itemData.item.price}
-          onSelect={() => {}}
+          onSelect={() => {
+            editProductHandler(itemData.item.productId)
+          }}
         >
           <Button
-            onPress={() => {}}
+            onPress={() => {
+              editProductHandler(itemData.item.productId)
+            }}
             title='Edit'
             color={colors.defaultPurple}
           />
           <Button
             onPress={() => {
-              return dispatch(deleteProduct(itemData.item.productId))
+              deleteHandler(itemData.item.productId)
             }}
             title='Delete'
             color={colors.defaultPurple}
@@ -56,6 +77,19 @@ UserProductsScreen.navigationOptions = navData => {
             navData.navigation.toggleDrawer()
           }}
           iconSize={36}
+        />
+      </HeaderButtons>
+    ),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title='Add'
+          iconName='ios-create'
+          color={colors.defaultPurple}
+          onPress={() => {
+            navData.navigation.navigate('EditProduct')
+          }}
+          iconSize={23}
         />
       </HeaderButtons>
     )

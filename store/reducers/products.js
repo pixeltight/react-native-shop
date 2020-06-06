@@ -1,5 +1,10 @@
 import { PRODUCTS } from '../../data/products-data'
-import { DELETE_PRODUCT } from '../actions/products'
+import {
+  DELETE_PRODUCT,
+  CREATE_PRODUCT,
+  UPDATE_PRODUCT
+} from '../actions/products'
+import Product from '../../models/product'
 
 const initialState = {
   products: PRODUCTS,
@@ -8,6 +13,46 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case CREATE_PRODUCT:
+      const newProduct = new Product(
+        new Date().toString(),
+        'u1',
+        action.productData.title,
+        action.productData.imageUrl,
+        action.productData.description,
+        action.productData.price
+      )
+      return {
+        ...state,
+        products: state.products.concat(newProduct),
+        userProducts: state.products.concat(newProduct)
+      }
+    case UPDATE_PRODUCT:
+      // update userProducts state
+      const productIndex = state.userProducts.findIndex(
+        prod => prod.productId === action.pid
+      )
+      const updatedProduct = new Product(
+        action.pid,
+        state.userProducts[productIndex].ownerId,
+        action.productData.title,
+        action.productData.imageUrl,
+        action.productData.description,
+        state.userProducts[productIndex].price
+      )
+      const updatedUserProducts = [...state.userProducts]
+      updatedUserProducts[productIndex] = updatedProduct
+      // update products state
+      const availableProductIndex = state.products.findIndex(
+        product => product.productId === action.pid
+      )
+      const updatedAvailableProducts = [...state.products]
+      updatedAvailableProducts[availableProductIndex] = updatedProduct
+      return {
+        ...state,
+        products: updatedAvailableProducts,
+        userProducts: updatedUserProducts
+      }
     case DELETE_PRODUCT:
       return {
         ...state,
