@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   orderItem: {
     marginTop: 20,
     marginHorizontal: 8,
+    marginTop: 50,
     padding: 10
   },
   summary: {

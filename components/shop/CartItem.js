@@ -3,10 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { Ionicons } from '@expo/vector-icons'
 import colors from '../../constants/colors'
+import Card from '../UI/Card'
 
 const CartItem = props => {
   return (
-    <View style={styles.cartItem}>
+    <Card style={styles.cartItem}>
       <View style={styles.itemData}>
         <Text style={styles.quantity}>{props.quantity} </Text>
         <Text style={styles.mainText}>{props.title}</Text>
@@ -22,17 +23,16 @@ const CartItem = props => {
           </TouchableOpacity>
         )}
       </View>
-    </View>
+    </Card>
   )
 }
 
 const styles = StyleSheet.create({
   cartItem: {
     padding: 6,
-    backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginHorizontal: 4
+    marginVertical: 10
   },
   itemData: {
     flexDirection: 'row',
