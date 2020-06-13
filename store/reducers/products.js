@@ -25,7 +25,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         products: state.products.concat(newProduct),
-        userProducts: state.products.concat(newProduct)
+        userProducts: state.userProducts.concat(newProduct)
       }
     case UPDATE_PRODUCT:
       // update userProducts state

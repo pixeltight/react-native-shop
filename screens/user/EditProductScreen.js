@@ -44,12 +44,11 @@ const EditProductScreen = props => {
   const editedProduct = useSelector(state =>
     state.products.userProducts.find(prod => prod.productId === prodId)
   )
-  console.log(editedProduct)
   const dispatch = useDispatch()
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
-      title: editedProduct ? editedProduct.title : '',
+      title: editedProduct ? editedProduct.productName : '',
       imageUrl: editedProduct ? editedProduct.imageUrl : '',
       description: editedProduct ? editedProduct.description : '',
       price: ''
@@ -110,7 +109,7 @@ const EditProductScreen = props => {
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior='padding'
-      keyboardVerticalOffset={65}
+      keyboardVerticalOffset={80}
     >
       <ScrollView>
         <View style={styles.form}>
@@ -122,7 +121,7 @@ const EditProductScreen = props => {
             returnKeyType='next'
             autoCorrect
             onInputChange={inputChangeHandler}
-            initialValue={editedProduct ? editedProduct.title : ''}
+            initialValue={editedProduct ? editedProduct.productName : ''}
             initiallyValid={!!editedProduct}
             required
           />
@@ -163,6 +162,7 @@ const EditProductScreen = props => {
             initiallyValid={!!editedProduct}
             required
             minLength={5}
+            blurOnSubmit
           />
         </View>
       </ScrollView>
