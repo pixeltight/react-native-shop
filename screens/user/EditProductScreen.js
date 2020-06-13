@@ -135,6 +135,8 @@ const EditProductScreen = props => {
             initialValue={editedProduct ? editedProduct.imageUrl : ''}
             initiallyValid={!!editedProduct}
             required
+            autoCorrect={false}
+            autoCapitalize='none'
           />
           {editedProduct ? null : (
             <Input
