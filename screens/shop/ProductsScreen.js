@@ -1,5 +1,12 @@
-import React, { useEffect } from 'react'
-import { StyleSheet, FlatList } from 'react-native'
+import React, { useState, useEffect, useCallback } from 'react'
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  FlatList,
+  ActivityIndicator
+} from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
@@ -11,12 +18,36 @@ import HeaderButton from '../../components/UI/HeaderButton'
 import colors from '../../constants/colors'
 
 const ProductsScreen = props => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState()
   const products = useSelector(state => state.products.products)
   const dispatch = useDispatch()
 
+  const loadProducts = useCallback(async () => {
+    console.log('LOAD PRODUCTS')
+    setError(null)
+    setIsLoading(true)
+    try {
+      await dispatch(productsActions.fetchProducts())
+    } catch (err) {
+      setError(err.message)
+    }
+    setIsLoading(false)
+  }, [dispatch, setIsLoading, setError])
+
+  // navigation listener - drawer navigation will not prompt refresh,
+  // may lead to stale data
   useEffect(() => {
-    dispatch(productsActions.fetchProducts())
-  }, [dispatch])
+    const willFocusSub = props.navigation.addListener('willFocus', loadProducts)
+
+    return () => {
+      willFocusSub.remove()
+    }
+  }, [loadProducts])
+
+  useEffect(() => {
+    loadProducts()
+  }, [dispatch, loadProducts])
 
   const selectItemHandler = (id, title) => {
     props.navigation.navigate({
@@ -56,6 +87,38 @@ const ProductsScreen = props => {
       </ProductThumbnail>
     )
   }
+
+  if (error) {
+    return (
+      <View style={styles.centeredContainer}>
+        <Text style={styles.message}>An error occurred.</Text>
+        <Button
+          title='Try again'
+          onPress={loadProducts}
+          color={colors.defaultPurple}
+        />
+      </View>
+    )
+  }
+
+  if (isLoading) {
+    return (
+      <View style={styles.centeredContainer}>
+        <ActivityIndicator size='large' color={colors.medGray} />
+      </View>
+    )
+  }
+
+  if (!isLoading && products.length === 0) {
+    return (
+      <View style={styles.centeredContainer}>
+        <Text style={styles.message}>
+          No products found. Please try adding some.
+        </Text>
+      </View>
+    )
+  }
+
   return (
     <FlatList
       data={products}
@@ -104,6 +167,15 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     paddingHorizontal: 12
+  },
+  centeredContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  message: {
+    fontFamily: 'roboto-regular',
+    fontSize: 12
   }
 })
 
