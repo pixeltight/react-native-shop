@@ -42,7 +42,7 @@ const formReducer = (state, action) => {
 
 const EditProductScreen = props => {
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(false)
+  const [error, setError] = useState()
   const prodId = props.navigation.getParam('productId')
   const editedProduct = useSelector(state =>
     state.products.userProducts.find(prod => prod.productId === prodId)
@@ -133,7 +133,7 @@ const EditProductScreen = props => {
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior='padding'
-      keyboardVerticalOffset={80}
+      keyboardVerticalOffset={100}
     >
       <ScrollView>
         <View style={styles.form}>

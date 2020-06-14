@@ -24,7 +24,7 @@ const ProductThumbnail = props => {
 const styles = StyleSheet.create({
   thumbnailContainer: {
     width: '100%',
-    marginBottom: 20,
+    marginTop: 20,
     borderRadius: 10,
     height: 250
   },
